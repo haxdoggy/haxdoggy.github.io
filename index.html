@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <title>Haxdoggy</title>
+    <style>
+        body { background: black; color: lime; font-family: 'Courier New', monospace; margin: 0; padding: 20px; }
+        #terminal { height: 80vh; overflow-y: auto; }
+        #prompt { color: lime; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div id="terminal">
+        <pre id="output"></pre>
+        <div id="prompt">root@kali:~$ <input type="text" id="input" autofocus style="background: black; color: lime; border: none; font-family: inherit;" onkeypress="handleInput(event)"></div>
+    </div>
+
+    <script>
+        const output = document.getElementById('output');
+        const input = document.getElementById('input');
+
+        // Visa loggan vid start
+        output.innerHTML = `
+
+#     █████   █████   █████████   █████ █████ ██████████      ███████      █████████    █████████  █████ █████
+#    ░░███   ░░███   ███░░░░░███ ░░███ ░░███ ░░███░░░░███   ███░░░░░███   ███░░░░░███  ███░░░░░███░░███ ░░███ 
+#     ░███    ░███  ░███    ░███  ░░███ ███   ░███   ░░███ ███     ░░███ ███     ░░░  ███     ░░░  ░░███ ███  
+#     ░███████████  ░███████████   ░░█████    ░███    ░███░███      ░███░███         ░███           ░░█████   
+#     ░███░░░░░███  ░███░░░░░███    ███░███   ░███    ░███░███      ░███░███    █████░███    █████   ░░███    
+#     ░███    ░███  ░███    ░███   ███ ░░███  ░███    ███ ░░███     ███ ░░███  ░░███ ░░███  ░░███     ░███    
+#     █████   █████ █████   █████ █████ █████ ██████████   ░░░███████░   ░░█████████  ░░█████████     █████   
+#    ░░░░░   ░░░░░ ░░░░░   ░░░░░ ░░░░░ ░░░░░ ░░░░░░░░░░      ░░░░░░░      ░░░░░░░░░    ░░░░░░░░░     ░░░░░    
+#                                                                                                             
+
+
+        \nWelcome to haxdoggy.io. Type 'help' for commands.\n`;
+
+        function handleInput(event) {
+            if (event.key === 'Enter') {
+                const cmd = input.value.trim().toLowerCase();
+                input.value = ''; // Rensa input
+
+                let response = '';
+                switch (cmd) {
+                    case 'home':
+                        response = 'Loading home...\nThis is the main page. Hacking the matrix since 1995.';
+                        break;
+                    case 'contact':
+                        response = 'Loading contact...\nEmail: haxdoggy@proton.me | Github: @haxdoggy';
+                        break;
+                    case 'help':
+                        response = 'Available commands: home, contact, clear, help';
+                        break;
+                    case 'clear':
+                        output.innerHTML = ''; // Rensa terminalen
+                        return;
+                    default:
+                        response = `Command '${cmd}' not found. Try 'help'.`;
+                }
+
+                output.innerHTML += `root@kali:~$ ${cmd}\n${response}\n`;
+                output.scrollTop = output.scrollHeight; // Scrolla ner
+            }
+        }
+    </script>
+</body>
+</html>
